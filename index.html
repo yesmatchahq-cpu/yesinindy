@@ -77,16 +77,18 @@
   .no { font-family: "NoScrawl", "Comic Sans MS", "Marker Felt", cursive; font-weight: 400; color: var(--ink); display: inline-block; line-height: 1.1; letter-spacing: 0; text-transform: none; }
   .hero h1 { position: relative; display: inline-block; }
   .hero .no-hero { position: absolute; left: 100%; bottom: 14%; font-size: clamp(28px, 6vw, 64px); transform: rotate(-8deg); margin-left: .25em; white-space: nowrap; }
-  .no-pay { font-size: 26px; transform: rotate(-4deg); margin-left: 6px; align-self: center; }
   .row .no { font-size: 24px; transform: rotate(-3deg); margin-top: 6px; }
   .row.later h3 { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
   .row.later h3 .slot { display: inline-block; min-width: 3ch; border-bottom: 4px solid var(--ink); -webkit-text-stroke: 0; }
   .row div { min-width: 0; }
   footer .no { color: var(--cream); font-size: 22px; transform: rotate(-5deg); }
+  .factcol { min-width: 0; display: grid; gap: 20px; }
+  .boo { width: min(300px, 70%); height: auto; justify-self: end; transform: rotate(-4deg); }
   @media (max-width: 760px) {
     .hero .no-hero { position: static; display: block; margin: 6px 0 0; transform: rotate(-5deg); font-size: 40px; }
     .next .wrap { grid-template-columns: 1fr; gap: 28px; }
     .row { grid-template-columns: 1fr; gap: 6px; }
+    .boo { justify-self: start; width: 220px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -116,17 +118,19 @@
         <div class="actions">
           <a class="btn solid" href="https://forms.gle/N7VPSW3JfdSvompV7" target="_blank" rel="noopener">SIGN UP</a>
           <a class="btn ghost" href="https://square.link/u/j3U7K5c0" target="_blank" rel="noopener">PAY $5</a>
-          <span class="no no-pay">just pay it. trust</span>
         </div>
         <p class="note">Paying ahead locks your spot.</p>
       </div>
-      <ul class="facts">
+      <div class="factcol">
+        <img class="boo" src="no-ghost.png" alt="A doodle by NO of a ghost holding a matcha next to a pumpkin" width="572" height="374">
+        <ul class="facts">
         <li><span>When</span><div>Thursday, Oct 29, 6pm</div></li>
         <li><span>Where</span><div>Canal Walk by the NCAA Hall of Champions</div></li>
         <li><span>What</span><div>Costumes on. Hot or iced matcha. Walk and chat.</div></li>
         <li><span>After</span><div>Bar afterparty (21+)</div></li>
         <li><span>Cost</span><div>$5</div></li>
       </ul>
+      </div>
     </div>
   </section>
 

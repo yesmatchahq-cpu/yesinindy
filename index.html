@@ -14,159 +14,315 @@
   @font-face { font-family: "Poppins"; font-weight: 400; src: url("Poppins-Regular.ttf") format("truetype"); font-display: swap; }
   @font-face { font-family: "Poppins"; font-weight: 500; src: url("Poppins-Medium.ttf") format("truetype"); font-display: swap; }
   @font-face { font-family: "NoScrawl"; src: url("NoMatchaScrawl.woff") format("woff"); font-display: swap; }
-  /* Layout: one tall column of full width bands. Cream page, lavender event band, black footer. Square everything. */
+
+  /* ===== tokens ===== */
   :root {
-    --cream: #FEF9F3;
-    --lav: #E3CDFC;
-    --ink: #111111;
-    --mute: #5A5560;
-    --line: #E6DED4;
+    --cream: #FEF9F3; --lav: #E3CDFC; --ink: #111111; --mute: #5A5560; --line: #E6DED4;
     --display: "Anton", "Impact", "Arial Narrow", sans-serif;
     --body: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    --scrawl: "NoScrawl", "Comic Sans MS", "Marker Felt", cursive;
     color-scheme: light;
   }
   * { box-sizing: border-box; }
-  html { background: var(--cream); }
-  body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; margin: 0; }
+  html { background: var(--cream); scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6; }
   a { color: inherit; }
+  img { max-width: 100%; display: block; }
   .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-  .band { width: 100%; }
-
-  header .wrap { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; }
-  .mark { font-family: var(--display); font-size: 30px; letter-spacing: .02em; text-decoration: none; line-height: 1; }
-  .handle { font-size: 14px; font-weight: 500; text-decoration: none; }
-  .handle:hover, .handle:focus-visible { text-decoration: underline; }
-
-  .hero .wrap { padding-block: 24px 64px; }
-  .hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(120px, 30vw, 340px); line-height: .82; margin: 0; letter-spacing: -.01em; }
-  .hero p { font-size: clamp(18px, 2.4vw, 24px); margin: 22px 0 0; max-width: 32ch; }
-
-  .next { background: var(--lav); }
-  .next .wrap { padding-block: 56px 64px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
   .eyebrow { font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 14px; }
-  .next h2 { font-family: var(--display); font-weight: 400; font-size: clamp(56px, 9vw, 112px); line-height: .9; margin: 0; text-wrap: balance; }
-  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; border-top: 1.5px solid var(--ink); }
-  .facts li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1.5px solid var(--ink); min-width: 0; }
-  .facts span { font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; padding-top: 3px; }
+  .mute { color: var(--mute); }
+  .no { font-family: var(--scrawl); font-weight: 400; line-height: 1.1; display: inline-block; letter-spacing: 0; text-transform: none; }
+  h2.big { font-family: var(--display); font-weight: 400; font-size: clamp(48px, 8vw, 96px); line-height: .92; margin: 0; text-wrap: balance; }
+
+  /* ===== menu bar ===== */
+  .bar { position: sticky; top: 0; z-index: 20; background: var(--cream); border-bottom: 1.5px solid var(--ink); }
+  .bar .wrap { display: flex; align-items: center; gap: 24px; padding-block: 14px; }
+  .mark { font-family: var(--display); font-size: 30px; line-height: 1; text-decoration: none; letter-spacing: .02em; }
+  .nav { display: flex; gap: 22px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .nav a:hover, .nav a:focus-visible { border-bottom-color: var(--ink); }
+  .cta { font-family: var(--display); font-size: 18px; letter-spacing: .04em; text-decoration: none; background: var(--ink); color: var(--cream); padding: 9px 18px; white-space: nowrap; border: 2px solid var(--ink); }
+  .cta:hover, .cta:focus-visible { background: var(--lav); color: var(--ink); }
+
+  /* ===== hero ===== */
+  .hero .wrap { padding-block: 40px 36px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+  .hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(120px, 26vw, 300px); line-height: .82; margin: 0; position: relative; display: inline-block; }
+  .hero h1 .no { position: absolute; left: 100%; bottom: 12%; margin-left: .25em; font-size: clamp(30px, 5vw, 56px); transform: rotate(-8deg); white-space: nowrap; }
+  .hero p { font-size: clamp(18px, 2.2vw, 22px); margin: 22px 0 0; max-width: 34ch; }
+  .hero .side { font-size: 14px; max-width: 26ch; text-align: right; }
+
+  /* ===== sliding photo strip (reusable) ===== */
+  .marquee { overflow: hidden; border-block: 1.5px solid var(--ink); background: var(--ink); }
+  .track { display: flex; gap: 6px; width: max-content; padding-block: 6px; animation: slide 60s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .track img { height: clamp(200px, 28vw, 320px); width: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  .swipe { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: thin; }
+  .swipe img { flex: 0 0 auto; width: clamp(180px, 22vw, 240px); aspect-ratio: 4 / 5; object-fit: cover; scroll-snap-align: start; }
+
+  /* ===== next up ===== */
+  .next { background: var(--lav); }
+  .next .wrap { padding-block: 64px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
   .btn { font-family: var(--display); font-size: 22px; letter-spacing: .04em; text-decoration: none; padding: 14px 28px; border: 2px solid var(--ink); display: inline-block; line-height: 1.1; }
   .btn.solid { background: var(--ink); color: var(--cream); }
   .btn.solid:hover, .btn.solid:focus-visible { background: transparent; color: var(--ink); }
-  .btn.ghost:hover, .btn.ghost:focus-visible { background: var(--ink); color: var(--lav); }
-  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .btn.line:hover, .btn.line:focus-visible { background: var(--ink); color: var(--lav); }
   .note { font-size: 13px; margin: 12px 0 0; }
+  .factcol { min-width: 0; display: grid; gap: 20px; }
+  .boo { width: min(300px, 70%); height: auto; justify-self: end; transform: rotate(-4deg); }
+  .facts { list-style: none; padding: 0; margin: 0; border-top: 1.5px solid var(--ink); }
+  .facts li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1.5px solid var(--ink); }
+  .facts span { font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; padding-top: 3px; }
 
-  .branches .wrap { padding-block: 72px; }
-  .branches .eyebrow { color: var(--mute); }
-  .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--line); }
-  .row:first-of-type { border-top: 1px solid var(--line); }
-  .row h3 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 6vw, 64px); line-height: 1; margin: 0; }
-  .row p { margin: 0; font-size: 18px; }
+  /* ===== what we do ===== */
+  .sec .wrap { padding-block: 80px 40px; }
+  .branch { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; padding: 28px 0; border-top: 1px solid var(--line); }
+  .branch h3 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5.5vw, 60px); line-height: 1; margin: 0 0 8px; }
+  .branch p { margin: 0; font-size: 17px; max-width: 36ch; }
+  .branch .no { font-size: 24px; transform: rotate(-3deg); margin-top: 8px; }
+  .branch > div { min-width: 0; }
+  .soon { display: grid; place-items: center; aspect-ratio: 16 / 7; border: 1.5px dashed var(--ink); background: var(--cream); }
+  .soon img { width: 200px; height: auto; transform: rotate(-4deg); }
 
-  .follow .wrap { padding-block: 0 72px; display: flex; flex-wrap: wrap; gap: 40px; }
-  .follow div { min-width: 0; }
-  .follow .eyebrow { color: var(--mute); margin-bottom: 6px; }
-  .follow a, .follow .val { font-size: 18px; font-weight: 500; text-decoration: none; word-break: break-word; }
-  .follow a:hover, .follow a:focus-visible { text-decoration: underline; }
+  /* ===== menu ===== */
+  .menu { background: var(--ink); color: var(--cream); }
+  .menu .wrap { padding-block: 72px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; }
+  .menu h2 { color: var(--lav); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+  .steps li { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start; }
+  .steps b { font-family: var(--display); font-weight: 400; font-size: 44px; line-height: .9; color: var(--lav); }
+  .steps h4 { font-family: var(--display); font-weight: 400; font-size: 24px; letter-spacing: .02em; margin: 0 0 2px; }
+  .steps p { margin: 0; font-size: 15px; }
+  .price { font-family: var(--display); font-size: 64px; line-height: 1; margin: 18px 0 4px; }
+  .menu .no { color: var(--lav); font-size: 26px; transform: rotate(-4deg); }
+
+  /* ===== so far / later ===== */
+  .log { list-style: none; margin: 18px 0 0; padding: 0; }
+  .log li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .log li:last-child { border-bottom: 1px solid var(--line); }
+  .log span { font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; padding-top: 4px; }
+  .log strong { font-family: var(--display); font-weight: 400; font-size: 28px; letter-spacing: .01em; display: block; line-height: 1.1; }
+  .later h3 { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+  .later .slot { display: inline-block; min-width: 3ch; border-bottom: 4px solid var(--ink); -webkit-text-stroke: 0; }
+
+  /* ===== say hi ===== */
+  .hi .wrap { padding-block: 40px 80px; display: flex; flex-wrap: wrap; gap: 40px; }
+  .hi div { min-width: 0; }
+  .hi a, .hi .val { font-size: 18px; font-weight: 500; text-decoration: none; word-break: break-word; }
+  .hi a:hover, .hi a:focus-visible { text-decoration: underline; }
 
   footer { background: var(--ink); color: var(--cream); }
   footer .wrap { padding-block: 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
   footer .mark { font-size: 22px; }
+  footer .no { font-size: 22px; transform: rotate(-5deg); }
   footer small { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
 
-  .no { font-family: "NoScrawl", "Comic Sans MS", "Marker Felt", cursive; font-weight: 400; color: var(--ink); display: inline-block; line-height: 1.1; letter-spacing: 0; text-transform: none; }
-  .hero h1 { position: relative; display: inline-block; }
-  .hero .no-hero { position: absolute; left: 100%; bottom: 14%; font-size: clamp(28px, 6vw, 64px); transform: rotate(-8deg); margin-left: .25em; white-space: nowrap; }
-  .row .no { font-size: 24px; transform: rotate(-3deg); margin-top: 6px; }
-  .row.later h3 { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
-  .row.later h3 .slot { display: inline-block; min-width: 3ch; border-bottom: 4px solid var(--ink); -webkit-text-stroke: 0; }
-  .row div { min-width: 0; }
-  footer .no { color: var(--cream); font-size: 22px; transform: rotate(-5deg); }
-  .factcol { min-width: 0; display: grid; gap: 20px; }
-  .boo { width: min(300px, 70%); height: auto; justify-self: end; transform: rotate(-4deg); }
-  @media (max-width: 760px) {
-    .hero .no-hero { position: static; display: block; margin: 6px 0 0; transform: rotate(-5deg); font-size: 40px; }
-    .next .wrap { grid-template-columns: 1fr; gap: 28px; }
-    .row { grid-template-columns: 1fr; gap: 6px; }
+  a:focus-visible, .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  @media (max-width: 800px) {
+    .bar .wrap { flex-wrap: wrap; gap: 10px 16px; }
+    .nav { order: 3; width: 100%; margin-left: 0; gap: 18px; }
+    .cta { margin-left: auto; }
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero .side { text-align: left; }
+    .hero h1 .no { position: static; display: block; margin: 8px 0 0; transform: rotate(-5deg); font-size: 40px; }
+    .next .wrap, .menu .wrap, .branch { grid-template-columns: 1fr; gap: 24px; }
     .boo { justify-self: start; width: 220px; }
+    .log li { grid-template-columns: 1fr; gap: 2px; }
   }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .track { animation: none; }
+    .marquee { overflow-x: auto; }
+  }
 </style>
 </head>
 <body>
 
-<header class="band">
+<!-- MENU BAR: add a link here when you add a section -->
+<header class="bar">
   <div class="wrap">
     <a class="mark" href="#top" aria-label="YES home">YES</a>
-    <a class="handle" href="https://www.instagram.com/yesinindy_" target="_blank" rel="noopener">@yesinindy_</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#next">Next up</a>
+      <a href="#what">What we do</a>
+      <a href="#menu">Matcha menu</a>
+      <a href="#sofar">So far</a>
+      <a href="#hi">Say hi</a>
+    </nav>
+    <a class="cta" href="walk.html">SIGN UP</a>
   </div>
 </header>
 
 <main id="top">
-  <section class="band hero">
+
+  <!-- HERO -->
+  <section class="hero">
     <div class="wrap">
-      <h1>YES.<span class="no no-hero">or no.</span></h1>
-      <p>events, volleyball and matcha. in indy.</p>
+      <div>
+        <h1>YES.<span class="no">or no.</span></h1>
+        <p>events, volleyball and matcha. in indy.</p>
+      </div>
+      <p class="side mute">started in 2026. a few months in, still saying yes to most things.</p>
     </div>
   </section>
 
-  <section class="band next" aria-labelledby="next-title">
+  <!-- PHOTO STRIP: drop new photos in img/ and add a line here -->
+  <div class="marquee" aria-label="Photos from our events">
+    <div class="track">
+      <img src="luau-7417.jpg" alt="Three friends at the YES MATCHA tent at the Chicago Luau" loading="lazy">
+      <img src="vb-2-2.5.jpg" alt="A player going up for a spike" loading="lazy">
+      <img src="luau-7409.jpg" alt="A guest sipping matcha at the Chicago Luau" loading="lazy">
+      <img src="vb-4-1.jpg" alt="A volleyball set at the net" loading="lazy">
+      <img src="luau-7406.jpg" alt="The YES MATCHA tent on the grass" loading="lazy">
+      <img src="vb-3-1.jpg" alt="Players waiting on a serve" loading="lazy">
+      <img src="luau-7408.jpg" alt="Two guests with matcha and the prize wheel" loading="lazy">
+      <img src="vb-6-2.5.jpg" alt="A jump at the net" loading="lazy">
+      <img src="luau-7419.jpg" alt="Friends with arms up at the matcha tent" loading="lazy">
+    </div>
+  </div>
+
+  <!-- NEXT UP: swap this block for each new event -->
+  <section class="next" id="next" aria-labelledby="next-title">
     <div class="wrap">
       <div>
         <p class="eyebrow">Next up · YES SOCIAL</p>
-        <h2 id="next-title">HAUNTED MATCHA WALK</h2>
+        <h2 class="big" id="next-title">HAUNTED MATCHA WALK</h2>
         <div class="actions">
-          <a class="btn solid" href="https://forms.gle/N7VPSW3JfdSvompV7" target="_blank" rel="noopener">SIGN UP</a>
-          <a class="btn ghost" href="https://square.link/u/j3U7K5c0" target="_blank" rel="noopener">PAY $5</a>
+          <a class="btn solid" href="walk.html">SIGN UP</a>
+          <a class="btn line" href="https://square.link/u/j3U7K5c0" target="_blank" rel="noopener">PAY $5</a>
         </div>
-        <p class="note">Paying ahead locks your spot.</p>
+        <p class="note">Paying ahead locks your spot. We need 20 sign ups by Wednesday night.</p>
       </div>
       <div class="factcol">
         <img class="boo" src="no-ghost.png" alt="A doodle by NO of a ghost holding a matcha next to a pumpkin" width="572" height="374">
         <ul class="facts">
-        <li><span>When</span><div>Thursday, Oct 29, 6pm</div></li>
-        <li><span>Where</span><div>Canal Walk by the NCAA Hall of Champions</div></li>
-        <li><span>What</span><div>Costumes on. Hot or iced matcha. Walk and chat.</div></li>
-        <li><span>After</span><div>Bar afterparty (21+)</div></li>
-        <li><span>Cost</span><div>$5</div></li>
-      </ul>
+          <li><span>When</span><div>Thursday, Oct 29, 6pm</div></li>
+          <li><span>Where</span><div>Canal Walk behind the NCAA Hall of Champions, 700 W Washington St</div></li>
+          <li><span>What</span><div>Costumes on. Hot or iced matcha. Walk and chat.</div></li>
+          <li><span>After</span><div>Bar afterparty (21+). The group picks the bar.</div></li>
+          <li><span>Cost</span><div>$5, matcha included</div></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <section class="band branches" aria-label="What YES does">
+  <!-- WHAT WE DO -->
+  <section class="sec" id="what" aria-labelledby="what-title">
     <div class="wrap">
-      <p class="eyebrow">What we do</p>
-      <div class="row"><h3>YES SOCIAL</h3><div><p>yes, a costume walk with matcha.</p><span class="no">costumes were my idea</span></div></div>
-      <div class="row"><h3>YES VOLLEYBALL</h3><div><p>yes, a random volleyball tournament.</p><span class="no">i'm on the other team</span></div></div>
-      <div class="row"><h3>YES MATCHA</h3><div><p>yes, matcha. hot or iced.</p><span class="no">iced. obviously.</span></div></div>
+      <p class="eyebrow mute">What we do</p>
+      <h2 class="big" id="what-title">THREE THINGS.<br>FOR NOW.</h2>
+
+      <div class="branch" style="margin-top:36px">
+        <div>
+          <h3>YES SOCIAL</h3>
+          <p>yes, a costume walk with matcha. small hangouts around indy.</p>
+          <span class="no">costumes were my idea</span>
+        </div>
+        <div class="soon"><img src="no-ghost.png" alt="" width="572" height="374"></div>
+      </div>
+
+      <div class="branch">
+        <div>
+          <h3>YES VOLLEYBALL</h3>
+          <p>yes, a random volleyball tournament. coed, competitive, music on.</p>
+          <span class="no">i'm on the other team</span>
+        </div>
+        <div class="swipe" aria-label="Volleyball photos, swipe for more">
+          <img src="vb-2-2.5.jpg" alt="A player going up for a spike" loading="lazy">
+          <img src="vb-1-2.5.jpg" alt="A player landing after a hit" loading="lazy">
+          <img src="vb-6-2.5.jpg" alt="A jump at the net" loading="lazy">
+          <img src="vb-3-2.5.jpg" alt="Players reading the play" loading="lazy">
+          <img src="vb-4-1.jpg" alt="A volleyball set at the net" loading="lazy">
+        </div>
+      </div>
+
+      <div class="branch">
+        <div>
+          <h3>YES MATCHA</h3>
+          <p>yes, matcha. hot or iced, at pop ups around the midwest.</p>
+          <span class="no">iced. obviously.</span>
+        </div>
+        <div class="swipe" aria-label="Matcha pop up photos, swipe for more">
+          <img src="luau-7417.jpg" alt="Three friends at the YES MATCHA tent" loading="lazy">
+          <img src="luau-7409.jpg" alt="A guest sipping matcha" loading="lazy">
+          <img src="luau-7406.jpg" alt="The YES MATCHA tent" loading="lazy">
+          <img src="luau-7408.jpg" alt="Two guests at the prize wheel" loading="lazy">
+          <img src="luau-7407.jpg" alt="The tent from across the field" loading="lazy">
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="band branches later-band" aria-label="Coming later">
-    <div class="wrap" style="padding-top:0">
-      <p class="eyebrow">Coming later</p>
-      <div class="row later"><h3>YES MATCHA LOUNGE</h3><div><p>yes, a matcha lounge. eventually.</p><span class="no">he keeps saying eventually</span></div></div>
-      <div class="row later"><h3>YES <span class="slot">&nbsp;</span></h3><div><p>yes, whatever comes next.</p><span class="no">NO ____ sounds better</span></div></div>
+  <!-- MATCHA MENU -->
+  <section class="menu" id="menu" aria-labelledby="menu-title">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">At our pop ups</p>
+        <h2 class="big" id="menu-title">BUILD YOUR LATTE</h2>
+        <p class="price">$9</p>
+        <p>Lemonade is $6.50. No steps.</p>
+        <span class="no">the strawberry one.</span>
+      </div>
+      <ol class="steps">
+        <li><b>1</b><div><h4>CHOOSE YOUR TEA</h4><p>Matcha or hojicha</p></div></li>
+        <li><b>2</b><div><h4>CHOOSE YOUR BASE</h4><p>Whole milk, oat milk +1.25, or coconut water +2.50</p></div></li>
+        <li><b>3</b><div><h4>ADD A FLAVOR</h4><p>Strawberry, mango or brown sugar, +0.50</p></div></li>
+        <li><b>4</b><div><h4>PICK YOUR SWEETNESS</h4><p>Less sweet, normal or extra sweet</p></div></li>
+      </ol>
     </div>
   </section>
 
-  <section class="band follow" aria-label="Find us">
+  <!-- SO FAR + COMING LATER: add new rows at the top -->
+  <section class="sec" id="sofar" aria-labelledby="sofar-title">
     <div class="wrap">
-      <div><p class="eyebrow">Instagram</p><a href="https://www.instagram.com/yesinindy_" target="_blank" rel="noopener">@yesinindy_</a></div>
-      <div><p class="eyebrow">Facebook</p><a href="https://www.facebook.com/profile.php?id=61595912701417" target="_blank" rel="noopener">YES in Indy</a></div>
-      <!-- TikTok goes here once the account exists -->
-      <div><p class="eyebrow">Email</p><span class="val">yesmatchahq@gmail.com</span></div>
+      <p class="eyebrow mute">So far</p>
+      <h2 class="big" id="sofar-title">A SHORT LIST.</h2>
+      <ul class="log">
+        <li><span>Oct 29</span><div><strong>HAUNTED MATCHA WALK</strong>our first YES SOCIAL. costumes required.</div></li>
+        <li><span>Sep 2026</span><div><strong>CHICAGO LUAU</strong>matcha at a grass volleyball tournament. it went really well.</div></li>
+        <li><span>Next</span><div><strong>YOU, MAYBE</strong><span class="no" style="font-size:22px">come say hi</span></div></li>
+      </ul>
+
+      <div class="branch later" style="margin-top:56px">
+        <div><p class="eyebrow mute">Coming later</p><h3>YES MATCHA LOUNGE</h3></div>
+        <div><p>yes, a matcha lounge. eventually.</p><span class="no">he keeps saying eventually</span></div>
+      </div>
+      <div class="branch later">
+        <div><h3>YES <span class="slot">&nbsp;</span></h3></div>
+        <div><p>yes, whatever comes next.</p><span class="no">NO ____ sounds better</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAY HI: add TikTok here once it exists -->
+  <section class="hi" id="hi" aria-label="Find us">
+    <div class="wrap">
+      <div><p class="eyebrow mute">Instagram</p><a href="https://www.instagram.com/yesinindy_" target="_blank" rel="noopener">@yesinindy_</a></div>
+      <div><p class="eyebrow mute">Facebook</p><a href="https://www.facebook.com/profile.php?id=61595912701417" target="_blank" rel="noopener">YES in Indy</a></div>
+      <div><p class="eyebrow mute">Snapchat</p><a href="https://www.snapchat.com/add/yesinindy" target="_blank" rel="noopener">yesinindy</a></div>
+      <div><p class="eyebrow mute">Email</p><span class="val">yesmatchahq@gmail.com</span></div>
     </div>
   </section>
 </main>
 
-<footer class="band">
+<footer>
   <div class="wrap">
     <span class="mark">YES</span>
     <span class="no">no was here</span>
     <small>Indianapolis · est. 2026</small>
   </div>
 </footer>
+
+<script>
+  // duplicate the photo strip once so it loops without a gap
+  document.querySelectorAll('.track').forEach(function (t) {
+    t.innerHTML += t.innerHTML;
+    t.querySelectorAll('img').forEach(function (img, i) { if (i >= t.children.length / 2) img.setAttribute('aria-hidden', 'true'); });
+  });
+</script>
 </body>
 </html>

@@ -8,7 +8,14 @@
 <style>body{background:#E3CDFC;color:#111;font-family:Arial,sans-serif;padding:40px 20px}</style>
 </head>
 <body>
-<p>Opening checkout for your team. <a href="https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay">Tap here if it doesn't open.</a></p>
-<script>location.replace("https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay");</script>
+<p>Opening checkout for your team. <a id="go" href="https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay">Tap here if it doesn't open.</a></p>
+<script>
+// pay.html?event=<id> pays for that event at its own price. With no event it pays for the Nov 20 tournament.
+var u = "https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay";
+var e = new URLSearchParams(location.search).get("event");
+if (e && /^[0-9a-f-]{36}$/i.test(e)) u += "?event=" + e;
+document.getElementById("go").href = u;
+location.replace(u);
+</script>
 </body>
 </html>

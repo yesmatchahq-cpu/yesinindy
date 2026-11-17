@@ -10,7 +10,7 @@
 <body>
 <p>Opening checkout for your team. <a id="go" href="https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay">Tap here if it doesn't open.</a></p>
 <script>
-// pay.html?event=<id> pays for that event at its own price. With no event it pays for the Nov 20 tournament.
+// pay.html?event=<id> pays for that event at its own price. With no event it pays for the Dec 11 tournament.
 var u = "https://wampzaihnbiwezohnbso.supabase.co/functions/v1/tourney-pay";
 var e = new URLSearchParams(location.search).get("event");
 if (e && /^[0-9a-f-]{36}$/i.test(e)) u += "?event=" + e;
